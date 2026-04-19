@@ -1,6 +1,13 @@
 #include <sdbus-c++/sdbus-c++.h>
 #include <iostream>
 #include <vector>
+#include <string>
+#include <algorithm>
+
+struct ServiceInfo {
+    std::string name;
+    std::vector<std::string> formats;
+};
 
 int main() {
     try {
@@ -13,19 +20,38 @@ int main() {
 
         auto object = sdbus::createObject(*connection, "/");
 
-        // RegisterService(name: String, supportedFormats: Array<String>)
+        std::vector<ServiceInfo> services;
+
+        // RegisterService
         object->registerMethod("RegisterService")
             .onInterface(interfaceName)
             .withInputParamNames("name", "supportedFormats")
-            .implementedAs([](const std::string& name, const std::vector<std::string>& formats) {
-                std::cout << "[RegisterService] name=" << name << "\nformats: ";
+            .implementedAs([&services](const std::string& name, const std::vector<std::string>& formats) {
+
+                std::cout << "[RegisterService] " << name << std::endl;
+
+                // 🔁 Проверяем, не зарегистрирован ли уже
+                auto it = std::find_if(services.begin(), services.end(),
+                    [&](const ServiceInfo& s) { return s.name == name; });
+
+                if (it != services.end()) {
+                    throw sdbus::Error("com.system.sharing.Error", "Service already registered");
+                }
+
+                ServiceInfo info;
+                info.name = name;
+                info.formats = formats;
+
+                services.push_back(info);
+
+                std::cout << "Registered formats: ";
                 for (const auto& f : formats) {
                     std::cout << f << " ";
                 }
                 std::cout << std::endl;
             });
 
-        // OpenFile(path: String)
+        // OpenFile
         object->registerMethod("OpenFile")
             .onInterface(interfaceName)
             .withInputParamNames("path")
@@ -33,7 +59,7 @@ int main() {
                 std::cout << "[OpenFile] path=" << path << std::endl;
             });
 
-        // OpenFileUsingService(path: String, service: String)
+        // OpenFileUsingService
         object->registerMethod("OpenFileUsingService")
             .onInterface(interfaceName)
             .withInputParamNames("path", "service")
@@ -44,7 +70,7 @@ int main() {
 
         object->finishRegistration();
 
-        std::cout << "DBus service with methods started..." << std::endl;
+        std::cout << "Service registry initialized..." << std::endl;
 
         connection->enterEventLoop();
 
