@@ -9,6 +9,10 @@ struct ServiceInfo {
     std::vector<std::string> formats;
 };
 
+void throwDbusError(const std::string& msg) {
+    throw sdbus::Error("com.system.sharing.Error", msg);
+}
+
 
 #include <nlohmann/json.hpp>
 #include <fstream>
@@ -82,28 +86,37 @@ int main() {
             .onInterface(interfaceName)
             .withInputParamNames("name", "supportedFormats")
             .implementedAs([&services](const std::string& name, const std::vector<std::string>& formats) {
+                try{
+                    if (name.empty()) {
+                        throwDbusError("Service name cannot be empty");
+                    }
 
-                std::cout << "[RegisterService] " << name << std::endl;
+                    auto it = std::find_if(services.begin(), services.end(),
+                        [&](const ServiceInfo& s) { return s.name == name; });
 
-                auto it = std::find_if(services.begin(), services.end(),
-                    [&](const ServiceInfo& s) { return s.name == name; });
+                    if (it != services.end()) {
+                        throwDbusError("Service already registered");
+                    }
 
-                if (it != services.end()) {
-                    throw sdbus::Error("com.system.sharing.Error", "Service already registered");
+                    ServiceInfo info;
+                    info.name = name;
+                    info.formats = formats;
+
+                    services.push_back(info);
+                    saveServices(services);
+
+                    std::cout << "[RegisterService] " << name << std::endl;
+
+                    std::cout << "Registered formats: ";
+                    for (const auto& f : formats) {
+                        std::cout << f << " ";
+                    }
+                    std::cout << std::endl;
+                } catch (const sdbus::Error&) {
+                    throw;
+                } catch (const std::exception& e) {
+                    throwDbusError(std::string("Internal error: ") + e.what());
                 }
-
-                ServiceInfo info;
-                info.name = name;
-                info.formats = formats;
-
-                services.push_back(info);
-                saveServices(services);
-
-                std::cout << "Registered formats: ";
-                for (const auto& f : formats) {
-                    std::cout << f << " ";
-                }
-                std::cout << std::endl;
             });
 
         // OpenFile
@@ -111,59 +124,70 @@ int main() {
             .onInterface(interfaceName)
             .withInputParamNames("path")
             .implementedAs([&services, &connection](const std::string& path) {
-
-                std::cout << "[OpenFile] path=" << path << std::endl;
-                std::string ext = getFileExtension(path);
-
-                if (ext.empty()) {
-                    throw sdbus::Error("com.system.sharing.Error", "File has no extension");
-                }
-
-                std::vector<std::string> candidates;
-
-                for (const auto& s : services) {
-                    if (std::find(s.formats.begin(), s.formats.end(), ext) != s.formats.end()) {
-                        candidates.push_back(s.name);
+                try{
+                    if (path.empty()) {
+                        throwDbusError("Path is empty");
                     }
-                }
 
-                if (candidates.empty()) {
-                    throw sdbus::Error("com.system.sharing.Error", "No service for this file type");
-                }
+                    std::string ext = getFileExtension(path);
 
-                std::vector<std::string> available;
+                    if (ext.empty()) {
+                        throwDbusError("File has no extension");
+                    }
 
-                for (const auto& serviceName : candidates) {
+                    std::vector<std::string> candidates;
+
+                    for (const auto& s : services) {
+                        if (std::find(s.formats.begin(), s.formats.end(), ext) != s.formats.end()) {
+                            candidates.push_back(s.name);
+                        }
+                    }
+
+                    if (candidates.empty()) {
+                        throwDbusError("No service supports this file type");
+                    }
+
+                    std::vector<std::string> available;
+
+                    for (const auto& serviceName : candidates) {
+                        try {
+                            auto proxy = sdbus::createProxy(*connection, serviceName, "/");
+
+                            proxy->finishRegistration();
+                            available.push_back(serviceName);
+
+                        } catch (...) {
+                            // service isnot avalible
+                        }
+                    }
+
+                    if (available.empty()) {
+                        throwDbusError("No available services running");
+                    }
+
+                    int index = std::rand() % available.size();
+                    std::string chosen = available[index];
+
+                    std::cout << "[OpenFile] path=" << path << std::endl;
+
+                    std::cout << "Chosen service: " << chosen << std::endl;
+
                     try {
-                        auto proxy = sdbus::createProxy(*connection, serviceName, "/");
+                        auto proxy = sdbus::createProxy(*connection, chosen, "/");
 
-                        proxy->finishRegistration();
-                        available.push_back(serviceName);
+                        auto method = proxy->createMethodCall(chosen, "OpenFile");
+                        method << path;
 
-                    } catch (...) {
+                        proxy->callMethod(method);
+
+                    } catch (const std::exception& e) {
+                        throw sdbus::Error("com.system.sharing.Error",
+                                        std::string("Failed to call chosen service: ") + e.what());
                     }
-                }
-
-                if (available.empty()) {
-                    throw sdbus::Error("com.system.sharing.Error", "No available services running");
-                }
-
-                int index = std::rand() % available.size();
-                std::string chosen = available[index];
-
-                std::cout << "Chosen service: " << chosen << std::endl;
-
-                try {
-                    auto proxy = sdbus::createProxy(*connection, chosen, "/");
-
-                    auto method = proxy->createMethodCall(chosen, "OpenFile");
-                    method << path;
-
-                    proxy->callMethod(method);
-
+                } catch (const sdbus::Error&) {
+                    throw;
                 } catch (const std::exception& e) {
-                    throw sdbus::Error("com.system.sharing.Error",
-                                    std::string("Failed to call chosen service: ") + e.what());
+                    throwDbusError(std::string("Internal error: ") + e.what());
                 }
             });
 
@@ -172,27 +196,34 @@ int main() {
             .onInterface(interfaceName)
             .withInputParamNames("path", "service")
             .implementedAs([&services, &connection](const std::string& path, const std::string& serviceName) {
+                try{
 
-                std::cout << "[OpenFileUsingService] path=" << path
-                        << " service=" << serviceName << std::endl;
+                    auto it = std::find_if(services.begin(), services.end(),
+                        [&](const ServiceInfo& s) { return s.name == serviceName; });
 
-                auto it = std::find_if(services.begin(), services.end(),
-                    [&](const ServiceInfo& s) { return s.name == serviceName; });
+                    if (it == services.end()) {
+                        throwDbusError("Service not registered");
+                    }
 
-                if (it == services.end()) {
-                    throw sdbus::Error("com.system.sharing.Error", "Service not registered");
-                }
+                    try {
+                        auto proxy = sdbus::createProxy(*connection, serviceName, "/");
+                        auto method = proxy->createMethodCall(serviceName, "OpenFile");
 
-                try {
-                    auto proxy = sdbus::createProxy(*connection, serviceName, "/");
-                    auto method = proxy->createMethodCall(serviceName, "OpenFile");
+                        method << path;
+                        proxy->callMethod(method);
 
-                    method << path;
-                    proxy->callMethod(method);
+                    } catch (const std::exception& e) {
+                        throw sdbus::Error("com.system.sharing.Error",
+                                        std::string("Failed to call service: ") + e.what());
+                    }
 
+                    std::cout << "[OpenFileUsingService] path=" << path << " service=" << serviceName << std::endl;
+                    std::cout << "[OpenFileUsingService] success" << std::endl;
+
+                } catch (const sdbus::Error&) {
+                    throw;
                 } catch (const std::exception& e) {
-                    throw sdbus::Error("com.system.sharing.Error",
-                                    std::string("Failed to call service: ") + e.what());
+                    throwDbusError(std::string("Internal error: ") + e.what());
                 }
             });
 
