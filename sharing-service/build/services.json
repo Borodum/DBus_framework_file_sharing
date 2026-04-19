@@ -5,5 +5,11 @@
             "mp3"
         ],
         "name": "com.example.player"
+    },
+    {
+        "formats": [
+            "txt"
+        ],
+        "name": "com.example.fake"
     }
 ]

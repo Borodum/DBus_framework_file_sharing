@@ -107,9 +107,29 @@ int main() {
         object->registerMethod("OpenFileUsingService")
             .onInterface(interfaceName)
             .withInputParamNames("path", "service")
-            .implementedAs([](const std::string& path, const std::string& service) {
+            .implementedAs([&services, &connection](const std::string& path, const std::string& serviceName) {
+
                 std::cout << "[OpenFileUsingService] path=" << path
-                          << " service=" << service << std::endl;
+                        << " service=" << serviceName << std::endl;
+
+                auto it = std::find_if(services.begin(), services.end(),
+                    [&](const ServiceInfo& s) { return s.name == serviceName; });
+
+                if (it == services.end()) {
+                    throw sdbus::Error("com.system.sharing.Error", "Service not registered");
+                }
+
+                try {
+                    auto proxy = sdbus::createProxy(*connection, serviceName, "/");
+                    auto method = proxy->createMethodCall(serviceName, "OpenFile");
+
+                    method << path;
+                    proxy->callMethod(method);
+
+                } catch (const std::exception& e) {
+                    throw sdbus::Error("com.system.sharing.Error",
+                                    std::string("Failed to call service: ") + e.what());
+                }
             });
 
         object->finishRegistration();
