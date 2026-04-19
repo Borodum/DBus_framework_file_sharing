@@ -1,0 +1,3 @@
+/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles/sharing-service.dir
+/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles/rebuild_cache.dir
