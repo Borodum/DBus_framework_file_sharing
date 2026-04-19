@@ -1,0 +1,9 @@
+[
+    {
+        "formats": [
+            "mp4",
+            "mp3"
+        ],
+        "name": "com.example.player"
+    }
+]

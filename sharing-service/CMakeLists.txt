@@ -19,3 +19,10 @@ add_executable(sharing-service
 target_link_libraries(sharing-service
     ${SDBUSCPP_LIBRARIES}
 )
+
+find_package(nlohmann_json REQUIRED)
+
+target_link_libraries(sharing-service
+    ${SDBUSCPP_LIBRARIES}
+    nlohmann_json::nlohmann_json
+)

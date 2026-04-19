@@ -1,1 +1,1 @@
-/usr/bin/c++ "CMakeFiles/sharing-service.dir/src/main.cpp.o" -o sharing-service  -lsdbus-c++ -lsystemd 
+/usr/bin/c++ "CMakeFiles/sharing-service.dir/src/main.cpp.o" -o sharing-service  -lsdbus-c++ -lsystemd -lsdbus-c++ -lsystemd 
