@@ -11,5 +11,11 @@
             "txt"
         ],
         "name": "com.example.fake"
+    },
+    {
+        "formats": [
+            "txt"
+        ],
+        "name": "com.example.test"
     }
 ]

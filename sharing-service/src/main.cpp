@@ -52,9 +52,20 @@ std::vector<ServiceInfo> loadServices() {
 }
 
 
+#include <cstdlib>
+#include <ctime>
+
+std::string getFileExtension(const std::string& path) {
+    auto pos = path.find_last_of('.');
+    if (pos == std::string::npos) return "";
+    return path.substr(pos + 1);
+}
+
+
 int main() {
     try {
         auto connection = sdbus::createSessionBusConnection();
+        std::srand(std::time(nullptr));
 
         const char* serviceName = "com.system.sharing";
         const char* interfaceName = "com.system.sharing";
@@ -99,8 +110,61 @@ int main() {
         object->registerMethod("OpenFile")
             .onInterface(interfaceName)
             .withInputParamNames("path")
-            .implementedAs([](const std::string& path) {
+            .implementedAs([&services, &connection](const std::string& path) {
+
                 std::cout << "[OpenFile] path=" << path << std::endl;
+                std::string ext = getFileExtension(path);
+
+                if (ext.empty()) {
+                    throw sdbus::Error("com.system.sharing.Error", "File has no extension");
+                }
+
+                std::vector<std::string> candidates;
+
+                for (const auto& s : services) {
+                    if (std::find(s.formats.begin(), s.formats.end(), ext) != s.formats.end()) {
+                        candidates.push_back(s.name);
+                    }
+                }
+
+                if (candidates.empty()) {
+                    throw sdbus::Error("com.system.sharing.Error", "No service for this file type");
+                }
+
+                std::vector<std::string> available;
+
+                for (const auto& serviceName : candidates) {
+                    try {
+                        auto proxy = sdbus::createProxy(*connection, serviceName, "/");
+
+                        proxy->finishRegistration();
+                        available.push_back(serviceName);
+
+                    } catch (...) {
+                    }
+                }
+
+                if (available.empty()) {
+                    throw sdbus::Error("com.system.sharing.Error", "No available services running");
+                }
+
+                int index = std::rand() % available.size();
+                std::string chosen = available[index];
+
+                std::cout << "Chosen service: " << chosen << std::endl;
+
+                try {
+                    auto proxy = sdbus::createProxy(*connection, chosen, "/");
+
+                    auto method = proxy->createMethodCall(chosen, "OpenFile");
+                    method << path;
+
+                    proxy->callMethod(method);
+
+                } catch (const std::exception& e) {
+                    throw sdbus::Error("com.system.sharing.Error",
+                                    std::string("Failed to call chosen service: ") + e.what());
+                }
             });
 
         // OpenFileUsingService
