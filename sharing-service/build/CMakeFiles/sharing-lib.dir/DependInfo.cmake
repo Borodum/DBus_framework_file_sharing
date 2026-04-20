@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/Request.cpp" "CMakeFiles/sharing-lib.dir/lib/Request.cpp.o" "gcc" "CMakeFiles/sharing-lib.dir/lib/Request.cpp.o.d"
   "/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/SharingService.cpp" "CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o" "gcc" "CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o.d"
   )
 

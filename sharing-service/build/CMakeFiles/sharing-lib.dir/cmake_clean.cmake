@@ -1,4 +1,6 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/sharing-lib.dir/lib/Request.cpp.o"
+  "CMakeFiles/sharing-lib.dir/lib/Request.cpp.o.d"
   "CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o"
   "CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o.d"
   "libsharing-lib.a"

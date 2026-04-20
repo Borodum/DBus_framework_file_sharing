@@ -142,6 +142,30 @@ sharing-lib/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/build
 .PHONY : sharing-lib/fast
 
+lib/Request.o: lib/Request.cpp.o
+.PHONY : lib/Request.o
+
+# target to build an object file
+lib/Request.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/lib/Request.cpp.o
+.PHONY : lib/Request.cpp.o
+
+lib/Request.i: lib/Request.cpp.i
+.PHONY : lib/Request.i
+
+# target to preprocess a source file
+lib/Request.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/lib/Request.cpp.i
+.PHONY : lib/Request.cpp.i
+
+lib/Request.s: lib/Request.cpp.s
+.PHONY : lib/Request.s
+
+# target to generate assembly for a file
+lib/Request.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/lib/Request.cpp.s
+.PHONY : lib/Request.cpp.s
+
 lib/SharingService.o: lib/SharingService.cpp.o
 .PHONY : lib/SharingService.o
 
@@ -200,6 +224,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... sharing-lib"
 	@echo "... sharing-service"
+	@echo "... lib/Request.o"
+	@echo "... lib/Request.i"
+	@echo "... lib/Request.s"
 	@echo "... lib/SharingService.o"
 	@echo "... lib/SharingService.i"
 	@echo "... lib/SharingService.s"

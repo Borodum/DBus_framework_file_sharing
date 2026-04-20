@@ -1,2 +1,2 @@
-/usr/bin/ar qc libsharing-lib.a "CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o"
+/usr/bin/ar qc libsharing-lib.a "CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o" "CMakeFiles/sharing-lib.dir/lib/Request.cpp.o"
 /usr/bin/ranlib libsharing-lib.a

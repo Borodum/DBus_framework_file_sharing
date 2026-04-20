@@ -29,6 +29,7 @@ target_link_libraries(sharing-service
 
 add_library(sharing-lib
     lib/SharingService.cpp
+    lib/Request.cpp
 )
 
 target_include_directories(sharing-lib PUBLIC lib)

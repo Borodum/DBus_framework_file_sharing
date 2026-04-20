@@ -4,10 +4,12 @@
 #include <functional>
 #include <string>
 #include <vector>
+#include "Request.h"
+
 
 class SharingService {
 public:
-    using OpenFileCallback = std::function<void(const std::string& path)>;
+    using OpenFileCallback = std::function<void(Request&)>;
 
     SharingService(const std::string& serviceName,
                    const std::vector<std::string>& supportedFormats,

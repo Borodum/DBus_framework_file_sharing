@@ -41,7 +41,11 @@ int SharingService::start() {
             .implementedAs([this](const std::string& path) {
 
                 try {
-                    callback_(path);
+                    // создаём фейковый Request без MethodCall
+                    Request req(path);
+
+                    callback_(req);
+
                 } catch (const std::exception& e) {
                     throw sdbus::Error("com.system.sharing.Error", e.what());
                 }

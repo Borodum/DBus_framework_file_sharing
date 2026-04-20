@@ -3,6 +3,7 @@
 
 CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o
  /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/SharingService.cpp
+ /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/Request.h
  /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/SharingService.h
  /usr/include/alloca.h
  /usr/include/asm-generic/errno-base.h

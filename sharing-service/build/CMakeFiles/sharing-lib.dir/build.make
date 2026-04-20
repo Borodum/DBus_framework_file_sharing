@@ -83,17 +83,33 @@ CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/SharingService.cpp -o CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.s
 
+CMakeFiles/sharing-lib.dir/lib/Request.cpp.o: CMakeFiles/sharing-lib.dir/flags.make
+CMakeFiles/sharing-lib.dir/lib/Request.cpp.o: /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/Request.cpp
+CMakeFiles/sharing-lib.dir/lib/Request.cpp.o: CMakeFiles/sharing-lib.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sharing-lib.dir/lib/Request.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharing-lib.dir/lib/Request.cpp.o -MF CMakeFiles/sharing-lib.dir/lib/Request.cpp.o.d -o CMakeFiles/sharing-lib.dir/lib/Request.cpp.o -c /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/Request.cpp
+
+CMakeFiles/sharing-lib.dir/lib/Request.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/sharing-lib.dir/lib/Request.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/Request.cpp > CMakeFiles/sharing-lib.dir/lib/Request.cpp.i
+
+CMakeFiles/sharing-lib.dir/lib/Request.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/sharing-lib.dir/lib/Request.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/lib/Request.cpp -o CMakeFiles/sharing-lib.dir/lib/Request.cpp.s
+
 # Object files for target sharing-lib
 sharing__lib_OBJECTS = \
-"CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o"
+"CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o" \
+"CMakeFiles/sharing-lib.dir/lib/Request.cpp.o"
 
 # External object files for target sharing-lib
 sharing__lib_EXTERNAL_OBJECTS =
 
 libsharing-lib.a: CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o
+libsharing-lib.a: CMakeFiles/sharing-lib.dir/lib/Request.cpp.o
 libsharing-lib.a: CMakeFiles/sharing-lib.dir/build.make
 libsharing-lib.a: CMakeFiles/sharing-lib.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libsharing-lib.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX static library libsharing-lib.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/sharing-lib.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sharing-lib.dir/link.txt --verbose=$(VERBOSE)
 
