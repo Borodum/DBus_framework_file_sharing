@@ -26,3 +26,18 @@ target_link_libraries(sharing-service
     ${SDBUSCPP_LIBRARIES}
     nlohmann_json::nlohmann_json
 )
+
+add_library(sharing-lib
+    lib/SharingService.cpp
+)
+
+target_include_directories(sharing-lib PUBLIC lib)
+
+target_link_libraries(sharing-lib
+    ${SDBUSCPP_LIBRARIES}
+)
+
+target_link_libraries(sharing-service
+    ${SDBUSCPP_LIBRARIES}
+    nlohmann_json::nlohmann_json
+)

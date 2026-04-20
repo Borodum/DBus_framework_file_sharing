@@ -129,6 +129,43 @@ sharing-service/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-service.dir/build.make CMakeFiles/sharing-service.dir/build
 .PHONY : sharing-service/fast
 
+#=============================================================================
+# Target rules for targets named sharing-lib
+
+# Build rule for target.
+sharing-lib: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sharing-lib
+.PHONY : sharing-lib
+
+# fast build rule for target.
+sharing-lib/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/build
+.PHONY : sharing-lib/fast
+
+lib/SharingService.o: lib/SharingService.cpp.o
+.PHONY : lib/SharingService.o
+
+# target to build an object file
+lib/SharingService.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.o
+.PHONY : lib/SharingService.cpp.o
+
+lib/SharingService.i: lib/SharingService.cpp.i
+.PHONY : lib/SharingService.i
+
+# target to preprocess a source file
+lib/SharingService.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.i
+.PHONY : lib/SharingService.cpp.i
+
+lib/SharingService.s: lib/SharingService.cpp.s
+.PHONY : lib/SharingService.s
+
+# target to generate assembly for a file
+lib/SharingService.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/lib/SharingService.cpp.s
+.PHONY : lib/SharingService.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -161,7 +198,11 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... sharing-lib"
 	@echo "... sharing-service"
+	@echo "... lib/SharingService.o"
+	@echo "... lib/SharingService.i"
+	@echo "... lib/SharingService.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
