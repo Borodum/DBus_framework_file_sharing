@@ -142,6 +142,19 @@ sharing-lib/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/build
 .PHONY : sharing-lib/fast
 
+#=============================================================================
+# Target rules for targets named example-service
+
+# Build rule for target.
+example-service: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 example-service
+.PHONY : example-service
+
+# fast build rule for target.
+example-service/fast:
+	$(MAKE) $(MAKESILENT) -f example/CMakeFiles/example-service.dir/build.make example/CMakeFiles/example-service.dir/build
+.PHONY : example-service/fast
+
 lib/Request.o: lib/Request.cpp.o
 .PHONY : lib/Request.o
 
@@ -222,6 +235,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
+	@echo "... example-service"
 	@echo "... sharing-lib"
 	@echo "... sharing-service"
 	@echo "... lib/Request.o"

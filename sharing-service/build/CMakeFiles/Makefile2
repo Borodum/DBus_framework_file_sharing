@@ -65,16 +65,33 @@ CMAKE_BINARY_DIR = /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_shar
 # The main recursive "all" target.
 all: CMakeFiles/sharing-service.dir/all
 all: CMakeFiles/sharing-lib.dir/all
+all: example/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: example/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/sharing-service.dir/clean
 clean: CMakeFiles/sharing-lib.dir/clean
+clean: example/clean
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory example
+
+# Recursive "all" directory target.
+example/all: example/CMakeFiles/example-service.dir/all
+.PHONY : example/all
+
+# Recursive "preinstall" directory target.
+example/preinstall:
+.PHONY : example/preinstall
+
+# Recursive "clean" directory target.
+example/clean: example/CMakeFiles/example-service.dir/clean
+.PHONY : example/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/sharing-service.dir
@@ -83,7 +100,7 @@ clean: CMakeFiles/sharing-lib.dir/clean
 CMakeFiles/sharing-service.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-service.dir/build.make CMakeFiles/sharing-service.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-service.dir/build.make CMakeFiles/sharing-service.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles --progress-num=4,5 "Built target sharing-service"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles --progress-num=6,7 "Built target sharing-service"
 .PHONY : CMakeFiles/sharing-service.dir/all
 
 # Build rule for subdir invocation for target.
@@ -109,7 +126,7 @@ CMakeFiles/sharing-service.dir/clean:
 CMakeFiles/sharing-lib.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles --progress-num=1,2,3 "Built target sharing-lib"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles --progress-num=3,4,5 "Built target sharing-lib"
 .PHONY : CMakeFiles/sharing-lib.dir/all
 
 # Build rule for subdir invocation for target.
@@ -127,6 +144,32 @@ sharing-lib: CMakeFiles/sharing-lib.dir/rule
 CMakeFiles/sharing-lib.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharing-lib.dir/build.make CMakeFiles/sharing-lib.dir/clean
 .PHONY : CMakeFiles/sharing-lib.dir/clean
+
+#=============================================================================
+# Target rules for target example/CMakeFiles/example-service.dir
+
+# All Build rule for target.
+example/CMakeFiles/example-service.dir/all: CMakeFiles/sharing-lib.dir/all
+	$(MAKE) $(MAKESILENT) -f example/CMakeFiles/example-service.dir/build.make example/CMakeFiles/example-service.dir/depend
+	$(MAKE) $(MAKESILENT) -f example/CMakeFiles/example-service.dir/build.make example/CMakeFiles/example-service.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles --progress-num=1,2 "Built target example-service"
+.PHONY : example/CMakeFiles/example-service.dir/all
+
+# Build rule for subdir invocation for target.
+example/CMakeFiles/example-service.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 example/CMakeFiles/example-service.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles 0
+.PHONY : example/CMakeFiles/example-service.dir/rule
+
+# Convenience name for target.
+example-service: example/CMakeFiles/example-service.dir/rule
+.PHONY : example-service
+
+# clean rule for target.
+example/CMakeFiles/example-service.dir/clean:
+	$(MAKE) $(MAKESILENT) -f example/CMakeFiles/example-service.dir/build.make example/CMakeFiles/example-service.dir/clean
+.PHONY : example/CMakeFiles/example-service.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

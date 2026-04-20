@@ -17,5 +17,12 @@
             "txt"
         ],
         "name": "com.example.test"
+    },
+    {
+        "formats": [
+            "txt",
+            "md"
+        ],
+        "name": "com.system.sharing.text"
     }
 ]

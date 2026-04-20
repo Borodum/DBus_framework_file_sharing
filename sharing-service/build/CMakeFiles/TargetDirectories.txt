@@ -2,3 +2,6 @@
 /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles/sharing-lib.dir
 /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles/edit_cache.dir
 /mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/CMakeFiles/rebuild_cache.dir
+/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/example/CMakeFiles/example-service.dir
+/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/example/CMakeFiles/edit_cache.dir
+/mnt/c/Users/Borodum/Desktop/contest/DBus_framework_file_sharing/sharing-service/build/example/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++ "CMakeFiles/example-service.dir/main.cpp.o" -o example-service  ../libsharing-lib.a -lsdbus-c++ -lsystemd 
